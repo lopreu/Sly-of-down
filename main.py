@@ -30,9 +30,9 @@ def download_video_task(task_id: str, url: str):
 
     output_template = os.path.join(DOWNLOAD_DIR, f"{task_id}.%(ext)s")
     
-    # Formato otimizado para compatibilidade máxima com navegadores de celulares
+    # FORÇAR CODEC avc1 (H.264): garante compatibilidade total com tocadores nativos do iOS (iPhone)
     ydl_opts = {
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+        'format': 'bestvideo[vcodec^=avc1]+bestaudio[ext=m4a]/best[vcodec^=avc1]/best',
         'merge_output_format': 'mp4',
         'outtmpl': output_template,
         'progress_hooks': [progress_hook],
@@ -86,7 +86,7 @@ def download_file(task_id: str):
     return {"error": "Arquivo não disponível ou ainda em processamento."}
 
 
-# Frontend Sly of Down (Com estampa, degradê e ícones de fundo)
+# Frontend Sly of Down
 @app.get("/", response_class=HTMLResponse)
 def index():
     return """
