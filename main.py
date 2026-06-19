@@ -30,7 +30,7 @@ def download_video_task(task_id: str, url: str):
 
     output_template = os.path.join(DOWNLOAD_DIR, f"{task_id}.%(ext)s")
     
-    # Mudamos o 'format' para priorizar H.264 (mp4) e AAC (m4a), garantindo que rode em celulares
+    # Formato otimizado para compatibilidade máxima com navegadores de celulares
     ydl_opts = {
         'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
         'merge_output_format': 'mp4',
@@ -77,7 +77,16 @@ def status(task_id: str):
     return tasks.get(task_id, {"error": "not found"})
 
 
-# Rota com o Frontend Avançado
+@app.get("/download-file/{task_id}")
+def download_file(task_id: str):
+    task = tasks.get(task_id)
+    if task and task["status"] == "done" and task["file"]:
+        if os.path.exists(task["file"]):
+            return FileResponse(task["file"], media_type="video/mp4", filename=f"sly_of_down_{task_id}.mp4")
+    return {"error": "Arquivo não disponível ou ainda em processamento."}
+
+
+# Frontend Sly of Down (Com estampa, degradê e ícones de fundo)
 @app.get("/", response_class=HTMLResponse)
 def index():
     return """
