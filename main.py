@@ -30,7 +30,7 @@ def download_video_task(task_id: str, url: str):
 
     output_template = os.path.join(DOWNLOAD_DIR, f"{task_id}.%(ext)s")
     
-    # FORÇAR CODEC avc1 (H.264): garante compatibilidade total com tocadores nativos do iOS (iPhone)
+    # FORÇAR CODEC avc1 (H.264): garante compatibilidade total de som e imagem no iOS (iPhone) e Android
     ydl_opts = {
         'format': 'bestvideo[vcodec^=avc1]+bestaudio[ext=m4a]/best[vcodec^=avc1]/best',
         'merge_output_format': 'mp4',
@@ -86,7 +86,7 @@ def download_file(task_id: str):
     return {"error": "Arquivo não disponível ou ainda em processamento."}
 
 
-# Frontend Sly of Down
+# Frontend Sly of Down (Com estampa, degradê e ícones de fundo)
 @app.get("/", response_class=HTMLResponse)
 def index():
     return """
@@ -290,7 +290,7 @@ def index():
                 100% { transform: rotate(35deg); }
             }
             @keyframes leg-swing-right {
-                0% { transform: rotate(35deg); }
+                0% { transform: rotate(-45deg); }
                 100% { transform: rotate(-45deg); }
             }
             .speed-line {
