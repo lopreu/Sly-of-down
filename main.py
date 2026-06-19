@@ -30,8 +30,9 @@ def download_video_task(task_id: str, url: str):
 
     output_template = os.path.join(DOWNLOAD_DIR, f"{task_id}.%(ext)s")
     
+    # Mudamos o 'format' para priorizar H.264 (mp4) e AAC (m4a), garantindo que rode em celulares
     ydl_opts = {
-        'format': 'bv*+ba/best',
+        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
         'merge_output_format': 'mp4',
         'outtmpl': output_template,
         'progress_hooks': [progress_hook],
@@ -76,18 +77,7 @@ def status(task_id: str):
     return tasks.get(task_id, {"error": "not found"})
 
 
-# Rota para enviar o arquivo baixado para o navegador do usuário
-@app.get("/download-file/{task_id}")
-def download_file(task_id: str):
-    task = tasks.get(task_id)
-    if task and task["status"] == "done" and task["file"]:
-        if os.path.exists(task["file"]):
-            # Retorna o arquivo de vídeo para o navegador do usuário
-            return FileResponse(task["file"], media_type="video/mp4", filename=f"sly_of_down_{task_id}.mp4")
-    return {"error": "Arquivo não disponível ou ainda em processamento."}
-
-
-# Frontend Sly of Down
+# Rota com o Frontend Avançado
 @app.get("/", response_class=HTMLResponse)
 def index():
     return """
@@ -96,7 +86,6 @@ def index():
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Cole aqui a tag do Google Search Console para indexar o site depois -->
         <title>Sly of Down - Baixador de Vídeos</title>
         <style>
             * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -493,7 +482,6 @@ def index():
                             statusText.innerText = 'Download concluído!';
                             showSuccess('Download concluído! Baixando arquivo...');
                             
-                            // Gatilho automático para baixar o arquivo no navegador do usuário
                             window.location.href = `/download-file/${taskId}`;
                         } 
                         else if (data.status === 'error') {
