@@ -31,9 +31,10 @@ def download_video_task(task_id: str, url: str):
 
     output_template = os.path.join(DOWNLOAD_DIR, f"{task_id}.%(ext)s")
     
-    # FORMATO CORRIGIDO: O [vcodec!=none] força o download de arquivos que possuam faixa de vídeo ativa
+    # FORMATO BLINDADO PARA IOS: Força o uso estrito do codec avc1 (H.264) e mp4a (AAC)
+    # Isso garante que tanto vídeos do Instagram quanto de outras redes rodem com som e imagem no iPhone!
     ydl_opts = {
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4][vcodec!=none]/best[vcodec!=none]',
+        'format': 'bestvideo[vcodec^=avc1]+bestaudio[acodec^=mp4a]/best[vcodec^=avc1]/best',
         'merge_output_format': 'mp4',
         'outtmpl': output_template,
         'progress_hooks': [progress_hook],
