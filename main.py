@@ -31,9 +31,9 @@ def download_video_task(task_id: str, url: str):
 
     output_template = os.path.join(DOWNLOAD_DIR, f"{task_id}.%(ext)s")
     
-    # Formato balanceado para Nuvem e PC (Garante compatibilidade de iPhone/Android)
+    # FORMATO CORRIGIDO: O [vcodec!=none] força o download de arquivos que possuam faixa de vídeo ativa
     ydl_opts = {
-        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4][vcodec!=none]/best[vcodec!=none]',
         'merge_output_format': 'mp4',
         'outtmpl': output_template,
         'progress_hooks': [progress_hook],
@@ -123,7 +123,9 @@ def index():
             .left-leg { left: 16px; animation: leg-swing-left 0.5s infinite alternate linear; z-index: 1; }
             .right-leg { left: 28px; animation: leg-swing-right 0.5s infinite alternate linear; z-index: 2; }
             @keyframes arm-swing-left { 0% { transform: rotate(50deg); } 100% { transform: rotate(-40deg); } }
+            @keyframes arm-swing-right { 0% { transform: rotate(-40deg); } 100% { transform: rotate(50deg); } }
             @keyframes leg-swing-left { 0% { transform: rotate(-45deg); } 100% { transform: rotate(35deg); } }
+            @keyframes leg-swing-right { 0% { transform: rotate(35deg); } 100% { transform: rotate(-45deg); } }
             .speed-line { position: absolute; height: 4px; background-color: #c084fc; border-radius: 2px; animation: wind 0.3s infinite linear; }
             .line-1 { width: 30px; left: -10px; top: 40px; } .line-2 { width: 20px; left: -20px; top: 60px; animation-delay: 0.1s; } .line-3 { width: 25px; left: -5px; top: 80px; animation-delay: 0.2s; }
             @keyframes wind { 0% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(-40px); opacity: 0; } }
@@ -140,10 +142,10 @@ def index():
         </style>
     </head>
     <body>
-        <svg class="bg-icon" style="top: 10%; left: 8%; width: 80px; height: 80px; --rot: -15deg;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="currentColor"/><path d="M19 17H5V19H19V17Z" fill="currentColor"/></svg>
-        <svg class="bg-icon" style="top: 15%; right: 10%; width: 100px; height: 100px; --rot: 20deg; animation-delay: 1s;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="currentColor"/><path d="M19 17H5V19H19V17Z" fill="currentColor"/></svg>
-        <svg class="bg-icon" style="bottom: 12%; left: 12%; width: 110px; height: 110px; --rot: 10deg; animation-delay: 2s;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="currentColor"/><path d="M19 17H5V19H19V17Z" fill="currentColor"/></svg>
-        <svg class="bg-icon" style="bottom: 18%; right: 15%; width: 70px; height: 70px; --rot: -25deg; animation-delay: 1.5s;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="currentColor"/><path d="M19 17H5V19H19V17Z" fill="currentColor"/></svg>
+        <svg class="bg-icon" style="top: 10%; left: 8%; width: 80px; height: 80px; --rot: -15deg;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="#ffffff"/><path d="M19 17H5V19H19V17Z" fill="#ffffff"/></svg>
+        <svg class="bg-icon" style="top: 15%; right: 10%; width: 100px; height: 100px; --rot: 20deg; animation-delay: 1s;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="#ffffff"/><path d="M19 17H5V19H19V17Z" fill="#ffffff"/></svg>
+        <svg class="bg-icon" style="bottom: 12%; left: 12%; width: 110px; height: 110px; --rot: 10deg; animation-delay: 2s;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="#ffffff"/><path d="M19 17H5V19H19V17Z" fill="#ffffff"/></svg>
+        <svg class="bg-icon" style="bottom: 18%; right: 15%; width: 70px; height: 70px; --rot: -25deg; animation-delay: 1.5s;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15L7 10H10V4H14V10H17L12 15Z" fill="#ffffff"/><path d="M19 17H5V19H19V17Z" fill="#ffffff"/></svg>
 
         <div class="container">
             <div class="btn-3d" id="icon-3d">
