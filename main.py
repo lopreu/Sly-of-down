@@ -275,29 +275,29 @@ def index():
     --txt:#f4f1ff; --muted:#b9b2e0;
     --violet:#8b5cf6; --violet2:#b794ff; --pink:#f472b6; --pink2:#ec4899;
     --cyan:#5ad1ff; --gold:#ffd479;
-    --glass:rgba(28,22,58,.45); --stroke:rgba(255,255,255,.14);
+    --glass:rgba(16,10,36,.55); --stroke:rgba(255,255,255,.12);
     --ok:#4ade80; --err:#fb7185;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
   html,body{height:100%}
   body{
     min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:22px;
-    color:var(--txt);position:relative;overflow:hidden;background:#0a0716;
+    color:var(--txt);position:relative;overflow:hidden;background:#06030f;
   }
 
-  /* AURORA viva — gradiente cônico que gira muito devagar */
-  .aurora{position:fixed;inset:-30%;z-index:0;filter:blur(60px) saturate(135%);opacity:.85;
+  /* AURORA — gradiente cônico em roxos profundos, girando devagar */
+  .aurora{position:fixed;inset:-30%;z-index:0;filter:blur(64px) saturate(115%);opacity:.62;
     background:
-      conic-gradient(from 0deg at 30% 30%, #2b1066, #6d28d9, #db2777, #0ea5e9, #6d28d9, #2b1066);
+      conic-gradient(from 0deg at 30% 30%, #0c0520, #221049, #3b0f74, #5a1670, #2a0d52, #0c0520);
     animation:spin 38s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   /* Blobs surreais que se deformam (morphing) */
   .blob{position:fixed;z-index:1;border-radius:42% 58% 63% 37%/41% 44% 56% 59%;
-    filter:blur(42px);opacity:.55;mix-blend-mode:screen;animation:morph 14s ease-in-out infinite}
-  .b1{width:340px;height:340px;background:#7c3aed;top:-60px;left:-40px}
-  .b2{width:300px;height:300px;background:#ec4899;bottom:-70px;right:-50px;animation-delay:-4s}
-  .b3{width:240px;height:240px;background:#22d3ee;top:40%;right:-30px;animation-delay:-8s}
+    filter:blur(46px);opacity:.40;mix-blend-mode:screen;animation:morph 14s ease-in-out infinite}
+  .b1{width:340px;height:340px;background:#4c1d95;top:-60px;left:-40px}
+  .b2{width:300px;height:300px;background:#6d1850;bottom:-70px;right:-50px;animation-delay:-4s}
+  .b3{width:240px;height:240px;background:#312e81;top:40%;right:-30px;animation-delay:-8s}
   @keyframes morph{
     0%,100%{border-radius:42% 58% 63% 37%/41% 44% 56% 59%;transform:translateY(0) rotate(0)}
     33%{border-radius:67% 33% 41% 59%/57% 62% 38% 43%;transform:translateY(-22px) rotate(40deg)}
@@ -448,7 +448,7 @@ def index():
     <div class="chips">
       <span class="chip">Legenda <b>EN</b></span>
       <span class="chip"><b>1</b> vídeo por vez</span>
-      <span class="chip">YouTube · Stremio · IG · TikTok · X · Vimeo</span>
+      <span class="chip">Stremio · Instagram · TikTok · X · Vimeo</span>
     </div>
 
     <div id="form">
@@ -457,7 +457,7 @@ def index():
         <button data-q="max" onclick="pickQ(this)">Máxima<small>até 4K</small></button>
       </div>
       <div class="inputwrap">
-        <input id="url" type="text" placeholder="Cole o link (YouTube, Stremio, Instagram, TikTok, X, Vimeo…)">
+        <input id="url" type="text" placeholder="Cole o link (Stremio, Instagram, TikTok, X, Vimeo…)">
         <button class="paste" onclick="pasteUrl()">Colar</button>
       </div>
       <button class="go" onclick="startDownload()">Baixar agora</button>
